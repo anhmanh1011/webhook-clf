@@ -5,7 +5,7 @@ def test_webhook():
     """Test function để gửi dữ liệu email mẫu đến webhook"""
     
     # URL của webhook (thay đổi theo địa chỉ server của bạn)
-    webhook_url = "http://38.89.142.88:5000/api/email"
+    webhook_url = "https://138.89.142.88:5000/api/email"
     
     # Dữ liệu email mẫu theo cấu trúc Cloudflare
     sample_email_data = {
@@ -39,7 +39,7 @@ def test_webhook():
 def test_get_emails():
     """Test function để lấy danh sách email đã xử lý"""
     
-    webhook_url = "http://38.89.142.88:5000/api/emails"
+    webhook_url = "https://138.89.142.88:5000/api/emails"
     
     try:
         response = requests.get(webhook_url)
