@@ -6,7 +6,7 @@ import logging.handlers
 from datetime import datetime
 import os
 from dotenv import load_dotenv
-from openai_translator import OpenAITranslator
+from aws_translator import AWSTranslator
 
 # Load environment variables
 load_dotenv()
@@ -60,8 +60,8 @@ def add_security_headers(response):
 # Enable CORS for all routes
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-# Khởi tạo OpenAI translator
-translator = OpenAITranslator()
+# Khởi tạo AWS translator
+translator = AWSTranslator()
 
 class EmailProcessor:
     """Class để xử lý dữ liệu email từ Cloudflare webhook"""
@@ -295,7 +295,7 @@ if __name__ == '__main__':
     use_https = os.environ.get('USE_HTTPS', 'false').lower() == 'true'
     debug_mode = os.environ.get('FLASK_ENV') == 'development'
     
-    logger.info("🚀 Khởi động Webhook Server với OpenAI Translation...")
+    logger.info("🚀 Khởi động Webhook Server với AWS Translation...")
     logger.info(f"Environment: {os.environ.get('FLASK_ENV', 'production')}")
     logger.info(f"Port: {port}")
     logger.info(f"HTTPS: {use_https}")

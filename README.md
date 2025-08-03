@@ -10,6 +10,7 @@ Project Python đơn giản để nhận và xử lý dữ liệu email từ Clo
 - ✅ Health check endpoint
 - ✅ Logging chi tiết
 - ✅ Error handling
+- ✅ AWS Translate API integration cho translation (thay thế OpenAI)
 
 ## Cài đặt
 
@@ -58,6 +59,33 @@ Server sẽ chạy tại `http://localhost:5000`
 - **URL:** `GET /health`
 - **Mô tả:** Kiểm tra trạng thái server
 
+## AWS Translate Integration
+
+Project này sử dụng AWS Translate API để dịch nội dung email. Để sử dụng tính năng này:
+
+1. **Tạo AWS Account và IAM User:**
+   - Tạo AWS account tại https://aws.amazon.com
+   - Tạo IAM user với quyền truy cập AWS Translate
+   - Tạo Access Key và Secret Key
+
+2. **Cấu hình Environment Variables:**
+   ```env
+   AWS_ACCESS_KEY_ID=your_access_key
+   AWS_SECRET_ACCESS_KEY=your_secret_key
+   AWS_REGION=us-east-1
+   ```
+
+3. **Test AWS Translate:**
+   ```bash
+   python test_aws_translate.py
+   ```
+
+### Tính năng Translation:
+- Tự động detect ngôn ngữ của email
+- Dịch nội dung sang tiếng Anh
+- Hỗ trợ nhiều ngôn ngữ (Vietnamese, French, Spanish, etc.)
+- Error handling và fallback
+
 ## Cấu hình Cloudflare
 
 Để sử dụng với Cloudflare, cấu hình webhook trong Cloudflare Workers như sau:
@@ -92,24 +120,46 @@ Chạy test để kiểm tra webhook:
 python test_webhook.py
 ```
 
+Test AWS Translate API:
+
+```bash
+python test_aws_translate.py
+```
+
+Test ứng dụng với AWS translator:
+
+```bash
+python test_app_with_aws.py
+```
+
 ## Environment Variables
 
 Tạo file `.env` để cấu hình:
 
 ```env
+# Server Configuration
 PORT=5000
 FLASK_ENV=development
+LOG_LEVEL=INFO
+
+# AWS Configuration (cho translation)
+AWS_ACCESS_KEY_ID=your_aws_access_key_id_here
+AWS_SECRET_ACCESS_KEY=your_aws_secret_access_key_here
+AWS_REGION=us-east-1
 ```
 
 ## Cấu trúc Project
 
 ```
 webhook-clf/
-├── app.py              # Flask application chính
-├── test_webhook.py     # Test script
-├── requirements.txt    # Python dependencies
-├── README.md          # Documentation
-└── .env               # Environment variables (tạo thủ công)
+├── app.py                 # Flask application chính
+├── aws_translator.py      # AWS Translate API integration
+├── openai_translator.py   # OpenAI translator (deprecated)
+├── test_webhook.py        # Test script cho webhook
+├── test_aws_translate.py  # Test script cho AWS Translate
+├── requirements.txt       # Python dependencies
+├── README.md             # Documentation
+└── .env                  # Environment variables (tạo thủ công)
 ```
 
 ## Deployment
